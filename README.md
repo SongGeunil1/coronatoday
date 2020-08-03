@@ -1,4 +1,4 @@
-# coronatoday
+# Corona-Today
 This is a website that shows and analyze Covid19 status in South Korea.
 
 This website provides 3 types of information.
