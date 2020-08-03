@@ -5,4 +5,4 @@ This website provides 3 types of information.
 
 <h1> 1. Risk Index </h1>
 First is risk index that indicates how dangerous certain place is associated with the outbreak of Covid19.
-<div style="background-image: url(img/risk_index.jpg);"></div>
+<link rel="image_src" href="img/risk_index.png" />
