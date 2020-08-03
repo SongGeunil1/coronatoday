@@ -1,0 +1,43 @@
+.instagram_media_area{
+    padding-top: 0px;
+    padding-bottom: 100px;
+    @media #{$mobile_device} {
+        padding-bottom: 30px;
+     }
+    .instagram_title{
+        margin-bottom: 48px;
+        i{
+            font-size: 25px;
+        }
+        h3{
+            font-family: $font1;
+            font-size: 38px;
+            font-weight: 400;
+            color: #1F1F1F;
+        }
+    }
+    .single_instragram{
+        overflow: hidden;
+        img{
+            @include transform(scale(1));
+            @include transition(.3s);
+            @media #{$mobile_device} {
+                width: 100%;
+                margin-bottom: 30px;
+            }
+            @media #{$tablet_device} {
+                width: 100%;
+                margin-bottom: 30px;
+            }
+            @media #{$mid_device} {
+                width: 100%;
+                margin-bottom: 30px;
+            }
+        }
+        &:hover{
+            img{
+                @include transform(scale(1.1));
+            }
+        }
+    }
+}

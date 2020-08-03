@@ -1,0 +1,64 @@
+@charset "UTF-8";
+
+body {
+  max-width: 2000px;  
+}
+
+  @media (max-width: 767px) {
+      /* line 62, ../../Arafath/CL/CL August/204. Blog/204. Blog- HTML/scss/_header.scss */
+      .header-area .main-header-area {
+          /* padding: 25px 0 !important; */
+      }
+  }
+  .welcome_protomedia {
+      padding-top: 0px !important;
+      padding-bottom: 20px !important;
+  }
+  .points{
+      font-size:85px !important;
+      font-family: 'MapoPeacefull' !important; 
+      text-align:center !important;
+      margin-bottom:10px;
+  }
+  .points-name{
+      font-size:50px !important;
+      font-family: 'MapoPeacefull' !important; 
+      text-align:center !important;
+      margin-bottom:10px;
+  }
+
+  .welcome_protomedia div {
+      height:400px;
+  }
+  input{
+      font-size:25px !important;
+  }
+  @media (max-width: 767px) {
+      .welcome_protomedia div {
+          width:90% !important;
+          margin-bottom:50px;
+          height:300px;
+      }
+      .welcome_protomedia div:nth-child(1) {
+          order:3
+      }
+
+      .welcome_protomedia div:nth-child(2) {
+          order:1
+      }
+      .welcome_protomedia div:nth-child(3) {
+          order:10
+      }
+      .welcome_protomedia {
+          flex-wrap:wrap;
+      }
+      .naming{
+          width:90% !important;
+      }
+      .welcome_protomedia > div > ul{
+          height:300px;
+      }
+      input{
+          font-size:15px !important;
+      }
+  }

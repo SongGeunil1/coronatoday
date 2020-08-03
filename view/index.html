@@ -1,0 +1,101 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <title>Corona-Today</title>
+    {% include "template/head_css.html" %}
+</head>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+
+<script src="{{ url_for('static',filename = 'js/location.js') }}"></script>
+
+<body>
+    <div id="map1"></div>
+
+    <header>
+        <div class="header-area">
+            {% include "template/header.html" %}
+
+            <div id="sticky-header" class="main-header-area white-bg">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-xl-7 col-lg-7">
+                            <div class="main-menu  d-none d-lg-block">
+                                <nav>
+                                    <ul id="navigation">
+                                        <li>
+                                            <a class="active" href="/">
+                                                홈
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/map">코로나맵</a>
+                                        </li>
+                                        <li>
+                                            <a href="/protection">신천지맵</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="search_input_box1" class="search_input bg_white">
+        <div class="container" style="font-family: 'MapoPeacefull'">
+                <form class="d-flex justify-content-between search-inner" onsubmit="searchPlaces(); return false;">
+                    <input type="text" style="padding:10px;" class="form-control" id="search_input" placeholder="자신의 위치를 입력하세요!">
+                    <button type="submit" class="btn"><i class="ti-search"></i></button> 
+                </form>
+        </div>
+        <ul id="placesList" style="display:none;"></ul>
+        <div style="display:none;" id="pagination"></div>
+        <hr>
+        <div class="banner" style="border: 1px solid rgba(0, 0, 0, .1); box-shadow : 2px 2px 5px #999;">
+
+            <h3 style="font-family: 'MapoPeacefull'; text-align:center; font-size:25px;">현재 상황</h3>
+            <canvas id="myChart" width="5" height="3"></canvas>
+            <br>
+            <h2 style="font-family: 'MapoPeacefull'; text-align:center; font-size:20px;">코로나 없는 대한민국! 그날까지!</h2>
+        </div>
+    </div>
+
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var data = {
+            type:'bar',
+            data: {
+                datasets: [{
+                    data: [{{data['confirmator']}} , {{data['heal']}}, {{data['die']}}],
+                    backgroundColor: ["#F9A729", "#5AB963","#C00000"]
+                }],
+                labels: ['확진 : '+({{data['confirmator']}}).toString()+'명','완치 : '+({{data['heal']}}).toString()+'명','사망 : '+({{data['die']}}).toString()+'명']
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    display: false,
+                    position:'bottom',
+                    labels:{
+                        fontSize: 12,
+                        fontFamily: 'MapoPeacefull'
+                    }
+                }
+            }
+        }
+    
+        var chart = new Chart(ctx, data);
+    </script>
+
+
+
+    {% include "template/footer.html" %}
+
+
+
+</body>
+
+</html>

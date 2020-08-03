@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Corona-map</title>
+    {% include "template/head_css.html" %}
+
+</head>
+<body>
+    <header>
+        <div class="header-area">
+            {% include "template/header.html" %}
+
+            <div id="sticky-header" class="main-header-area white-bg">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-xl-7 col-lg-7">
+                            <div class="main-menu  d-none d-lg-block">
+                                <nav>
+                                    <ul id="navigation">
+                                        <li>
+                                            <a href="/" style="font-family: 'MapoPeacefull'">
+                                                홈
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="active" href="/map" style="font-family: 'MapoPeacefull'">코로나맵</a>
+                                        </li>
+                                        <li>
+                                            <a href="/protection" style="font-family: 'MapoPeacefull'">신천지맵</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="map"></div>
+
+    {% include "template/footer.html" %}
+
+</body>
+<script>
+    function makeOverListener(map, marker, infowindow) {
+        return function() {
+            infowindow.open(map, marker);
+        };
+    }
+
+    // 인포윈도우를 닫는 클로저를 만드는 함수입니다
+    function makeOutListener(infowindow) {
+        return function() {
+            infowindow.close();
+        };
+    }
+    var map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
+        center : new kakao.maps.LatLng(36.2683, 127.6358), // 지도의 중심좌표
+        level : 13 // 지도의 확대 레벨
+    });
+    
+    // 마커 클러스터러를 생성합니다 
+    var clusterer = new kakao.maps.MarkerClusterer({
+        map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
+        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
+        minLevel: 5 // 클러스터 할 최소 지도 레벨 
+    });
+ 
+    // 데이터를 가져오기 위해 jQuery를 사용합니다
+    // 데이터를 가져와 마커를 생성하고 클러스터러 객체에 넘겨줍니다
+    lat = {{ lat }}
+    lon = {{ lon }}
+    number = "{{ number }}".replace(/&#39;/g, "\"");
+    number = JSON.parse(number)
+    place_info1="{{ place_info1 }}".replace(/&#39;/g, "\"");
+    place_info1 = JSON.parse(place_info1)
+
+    // place_info2="{{ place_info2 }}".replace(/&#39;/g, "\"").replace(/&#34;/g,"\"");;
+    // place_info2 = JSON.parse(place_info2)
+    
+    movearound_date = "{{movearound_date}}".replace(/&#39;/g, "\"")
+
+    movearound_date = JSON.parse(movearound_date)
+    positions=[]
+    markers=[]
+    for (i in lat){
+        position = {
+            content: '<div style="padding:10px; width:500px; font-weight:600; border-bottom: 1px solid rgba(0, 0, 0, .1);">'+number[i].toString()+'번 확진자 ('+movearound_date[i]+'일)'+'</div> <div style="padding:10px; font-size:12px;"><strong>'+place_info1[i]+"</strong>"+'</div>', 
+            latlng: new kakao.maps.LatLng(lat[i],lon[i])
+        }
+        var marker = new kakao.maps.Marker({
+            map: map,
+            position: new kakao.maps.LatLng(lat[i],lon[i])
+        });
+
+        var infowindow = new kakao.maps.InfoWindow({
+            content: position.content, // 인포윈도우에 표시할 내용
+            removable : true
+        });
+
+        kakao.maps.event.addListener(marker, 'click', makeOverListener(map, marker, infowindow));
+        // kakao.maps.event.addListener(marker, 'click', makeOutListener(infowindow));
+        markers.push(marker)
+        positions.push(position)
+    }
+    clusterer.addMarkers(markers);
+</script>
+</html>

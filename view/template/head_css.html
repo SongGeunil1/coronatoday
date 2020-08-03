@@ -1,0 +1,141 @@
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="shortcut icon" type="image/x-icon" href="img/logo2.png">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+<script data-ad-client="ca-pub-7096763909047424" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-158847691-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-158847691-1');
+</script>
+
+<meta name="naver-site-verification" content="b3202cc4c659634b23f34757d7072b04d453dcc6"/>
+
+<meta property="og:title" content="코로나투데이">
+<meta property="og:description" content="지금 당장 확인하세요!">
+<meta property="og:image" content="{{ url_for('static', filename='img/logo2.png') }}">
+
+<link rel="image_src" href="{{ url_for('static', filename='img/logo2.png') }}" />
+
+
+<!-- CSS here -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/owl.carousel.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/magnific-popup.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/themify-icons.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/nice-select.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/flaticon.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/animate.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/slicknav.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css">
+<script src="{{ url_for('static',filename = 'js/vendor/modernizr-3.5.0.min.js') }}"></script>
+<script src="{{ url_for('static',filename = 'js/vendor/jquery-1.12.4.min.js') }}"></script>
+<script src="{{ url_for('static',filename = 'js/popper.min.js') }}"></script>
+<script src="{{ url_for('static',filename = 'js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static',filename = 'js/owl.carousel.min.js') }}"></script>
+<script src="{{ url_for('static',filename = 'js/isotope.pkgd.min.js') }}"></script>
+<script src="{{ url_for('static',filename = 'js/ajax-form.js') }}"></script>
+<script src="{{ url_for('static',filename = 'js/waypoints.min.js') }}"></script>
+<script src="{{ url_for('static',filename = 'js/jquery.counterup.min.js') }}"></script>
+<script src="{{ url_for('static',filename = 'js/imagesloaded.pkgd.min.js') }}"></script>
+<script src="{{ url_for('static',filename = 'js/scrollIt.js') }}"></script>
+<script src="{{ url_for('static',filename = 'js/jquery.scrollUp.min.js') }}"></script>
+<script src="{{ url_for('static',filename = 'js/wow.min.js') }}"></script>
+<script src="{{ url_for('static',filename = 'js/nice-select.min.js') }}"></script>
+<script src="{{ url_for('static',filename = 'js/jquery.slicknav.min.js') }}"></script>
+<script src="{{ url_for('static',filename = 'js/jquery.magnific-popup.min.js') }}"></script>
+<script src="{{ url_for('static',filename = 'js/plugins.js') }}"></script>
+
+<script src="{{ url_for('static',filename = 'js/contact.js') }}"></script>
+<script src="{{ url_for('static',filename = 'js/jquery.ajaxchimp.min.js') }}"></script>
+<script src="{{ url_for('static',filename = 'js/jquery.form.js') }}"></script>
+<script src="{{ url_for('static',filename = 'js/jquery.validate.min.js') }}"></script>
+<script src="{{ url_for('static',filename = 'js/mail-script.js') }}"></script>
+<script src="{{ url_for('static',filename = 'js/main.js') }}"></script>
+
+
+<style>
+    .aboutus a{
+        color: #919191;
+        font-size: 16px;
+        font-family: "Roboto", sans-serif;
+        font-weight: 400;
+        margin-bottom: 0;
+    }
+    .header-area{
+        background-color:rgb(243,249,250);
+    }
+
+    .d-none {
+        display: block!important;
+    }
+    @media (max-width: 767px) {
+        .header-area .main-header-area {
+            padding: 0px 0!important;
+        }
+    }
+    .fa.fa-facebook{
+        color:rgb(66,103,178);
+        cursor: pointer;
+    }
+    div.naming{
+        padding:10px;
+        width:70%;
+        margin:auto; 
+        color:white; 
+        border-radius:10px;
+        text-align:center;
+        font-family: 'MapoPeacefull'; 
+        font-size:20px; 
+    }
+    #map1{
+        width:100%; 
+        height:100%; 
+        position:relative;
+        overflow:hidden;
+        display:none;
+    }
+    #search_input_box1{
+        margin-top:20px;
+    }
+
+    a{
+        font-family: 'MapoPeacefull';
+    }
+    div.info{
+        font-family: "MapoPeacefull" !important;
+        padding:5px;
+    }
+    div#map{
+        width:100%;
+        height:600px;
+    }
+    #placesList .item {
+        position: relative;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);;
+        overflow: hidden;
+        cursor: pointer;
+        min-height: 45px;
+        background-color: rgb(250, 250, 250);
+    }
+    #search_input_box1{
+        background: rgba(255, 255, 255, 0.7);
+        z-index: 1;
+        font-size: 12px;
+        border-radius: 10px;
+    }
+    #placesList{
+        height:200px;
+        overflow-y: auto;
+        padding:5px;
+    }
+</style>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=158623372ef7eb013671f42f3bbdb86a&libraries=services,clusterer,drawing"></script>

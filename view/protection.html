@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Corona-map</title>
+    {% include "template/head_css.html" %}
+
+</head>
+<body>
+    <header>
+        <div class="header-area">
+            {% include "template/header.html" %}
+
+            <div id="sticky-header" class="main-header-area white-bg">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-xl-7 col-lg-7">
+                            <div class="main-menu  d-none d-lg-block">
+                                <nav>
+                                    <ul id="navigation">
+                                        <li>
+                                            <a href="/" style="font-family: 'MapoPeacefull'">
+                                                홈
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/map" style="font-family: 'MapoPeacefull'">코로나맵</a>
+                                        </li>
+                                        <li>
+                                            <a class="active" href="/protection" style="font-family: 'MapoPeacefull'">신천지맵</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div style="height:25px; background-color:#F9A729; line-height: 25px; text-align:center; white-space:pre-line; font-size:12px;">본 페이지는 신천지에 대한 혐오감을 조성하기 위함이 아닌,</div>
+    <div style="height:25px; background-color:#F9A729; line-height: 25px; text-align:center; white-space:pre-line; font-size:12px;">공공보건의 관점에서 잠재적 감염자들에 대한 정보를 공유하는 것임</div>
+
+    <div id="map"></div>
+    {% include "template/footer.html" %}
+
+</body>
+<script>
+    function makeOverListener(map, marker, infowindow) {
+        return function() {
+            infowindow.open(map, marker);
+        };
+    }
+
+    function makeOutListener(infowindow) {
+        return function() {
+            infowindow.close();
+        };
+    }
+    var map = new kakao.maps.Map(document.getElementById('map'), {
+        center : new kakao.maps.LatLng(36.2683, 127.6358), 
+        level : 13
+    });
+    
+    var clusterer = new kakao.maps.MarkerClusterer({
+        map: map,
+        averageCenter: true,
+        minLevel: 5
+    });
+ 
+    lat = {{ lat }}
+    lon = {{ lon }}
+    location11 = "{{ location }}".replace(/&#39;/g, "\"")
+    location11 = JSON.parse(location11)
+    positions=[]
+    markers=[]
+    for (i in lat){
+        position = {
+            content: '<div style="padding:10px; width:500px; font-weight:600; border-bottom: 1px solid rgba(0, 0, 0, .1);">'+location11[i]+'</div>', 
+            latlng: new kakao.maps.LatLng(lat[i],lon[i])
+        }
+        var marker = new kakao.maps.Marker({
+            map: map,
+            position: new kakao.maps.LatLng(lat[i],lon[i])
+        });
+
+        var infowindow = new kakao.maps.InfoWindow({
+            content: position.content,
+            removable : true
+        });
+
+        kakao.maps.event.addListener(marker, 'click', makeOverListener(map, marker, infowindow));
+        markers.push(marker)
+        positions.push(position)
+    }
+    clusterer.addMarkers(markers);
+</script>
+
+
+
+</html>

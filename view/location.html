@@ -1,0 +1,206 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <title>Corona-Today</title>
+    {% include "template/head_css.html" %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/location.css') }}">
+</head>
+
+<script src="{{ url_for('static',filename = 'js/location.js') }}"></script>
+
+<body>
+    <header>
+        <div class="header-area">
+            {% include "template/header.html" %}
+
+            <div id="sticky-header" class="main-header-area white-bg">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-xl-7 col-lg-7">
+                            <div class="main-menu  d-none d-lg-block">
+                                <nav>
+                                    <ul id="navigation">
+                                        <li>
+                                            <a class="active" href="/" style="font-family: 'MapoPeacefull'">
+                                                홈
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/map" style="font-family: 'MapoPeacefull'">코로나맵</a>
+                                        </li>
+                                        <li>
+                                            <a href="/protection" style="font-family: 'MapoPeacefull'">신천지맵</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+
+
+    <div id="search_input_box1" class="search_input bg_white" style="margin-top:20px;">
+        <div class="container" style="font-family: 'MapoPeacefull'">
+                <form class="d-flex justify-content-between search-inner" onsubmit="searchPlaces(); return false;">
+                    <input type="text" style="padding:10px;" class="form-control" id="search_input" value="{{id}}">
+                    <button type="submit" class="btn"><i class="ti-search"></i></button> 
+                </form>
+        </div>
+        <ul id="placesList" style="display:none;"></ul>
+        <div style="display:none;" id="pagination"></div>
+
+
+        <hr>
+        <div style="border: 1px solid rgba(0, 0, 0, .1); box-shadow : 2px 2px 5px #999; padding:30px;">
+            <div class="points-name" style="color:black;">위험점수</div>
+            <div style="font-size:14px; text-align:center;">최소:0점, 최대:100점, <br>100점에 아까울수록 위험</div>
+            <div style="color:red; font-size:14px; text-align:center;">( 5km 내의 확진자 행동 데이터만 가지고 산정하기 때문에 정확하지 않을 수 있습니다 )</div>
+            {% if 10>=score %}
+            <div class="points" style="color:rgb(41,128,185); font-weight:900;">{{ score }}점</div>
+            <div class="naming" style="padding:10px; width:70%; margin:auto; color:white; border-radius:10px; background-color:rgb(41,128,185); text-align:center; font-family: 'MapoPeacefull'; font-size:20px;">안심지역!</div> 
+            {% elif 40>=score %}
+            <div class="points" style="color:rgb(39,174,96); font-weight:900;">{{ score }}점</div>
+            <div class="naming" style="padding:10px; width:70%; margin:auto; color:white; border-radius:10px; background-color:rgb(39,174,96); text-align:center; font-family: 'MapoPeacefull'; font-size:20px;">주의해!</div> 
+            {% elif 70>=score %}
+            <div class="points" style="color:rgb(243,156,18); font-weight:900;">{{ score }}점</div>
+            <div class="naming" style="padding:10px; width:70%; margin:auto; color:white; border-radius:10px; background-color:rgb(243,156,18); text-align:center; font-family: 'MapoPeacefull'; font-size:20px;">위험해!</div> 
+            {% elif 90>=score %}
+            <div class="points" style="color:rgb(231,76,60); font-weight:900;">{{ score }}점</div>
+            <div class="naming" style="padding:10px; width:70%; margin:auto; color:white; border-radius:10px; background-color:rgb(231,76,60); text-align:center; font-family: 'MapoPeacefull'; font-size:20px;">정신차려! 위험해!</div> 
+            {% elif 100>=score %}
+            <div class="points" style="color:rgb(33,33,33); font-weight:900;">{{ score }}점</div>
+            <div class="naming" style="padding:10px; width:70%; margin:auto; color:white; border-radius:10px; background-color:rgb(33,33,33); text-align:center; font-family: 'MapoPeacefull'; font-size:20px;">매우 위험!!</div> 
+            {% endif %}
+            <div style="text-align:center; font-family: 'MapoPeacefull'; font-size:20px; margin-top:20px;">
+                당장 공유하기! <i class="fa fa-facebook" style="color:rgb(66,103,178); cursor: pointer;" onclick="window.open('https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&u=coronatoday.co.kr&display=popup&ref=plugin&src=share_button','','toolbar=no,menubar=no,location=no,height=500,width=500');"></i>
+            </div>
+        </div>
+        <hr>
+    </div>
+
+    <div class="welcome_protomedia" style='display: flex; justify-content:center; margin:auto;'>
+        <div style='width:23%; margin-left:2%; border: 1px solid rgba(0, 0, 0, .1); box-shadow : 2px 2px 5px #999;'>
+            <canvas id="myChart" width="5" height="3"></canvas>
+        </div>
+        <div style='width:23%; margin-left:2%; border: 1px solid rgba(0, 0, 0, .1); box-shadow : 2px 2px 5px #999;'>
+            <h3 style="padding:1px; font-family: 'MapoPeacefull'; text-align:center; font-size:18px;">확진자 방문기록(총 {{ info|length }}회)</h3>
+            <ul style='overflow-y: auto; height:80%;'>
+                {% for data_dic in info %}
+                    <li style="font-family: MapoPeacefull; border-bottom: 1px solid rgba(0, 0, 0, 0.12); padding: 10px; max">
+                        {{data_dic['movearound_date']}}
+                        {{ data_dic['place_1'] }}
+                        ( 반경 {{data_dic['km']|round(2) }}km 이내 )
+                        <br>
+                        <span style="color:grey; font-size:14px;">{{ data_dic['place_2'] }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div style='width:23%; margin-left:2%; border: 1px solid rgba(0, 0, 0, .1); box-shadow : 2px 2px 5px #999;'>
+            <canvas id="myChart2" width="5" height="3"></canvas>
+        </div>
+    </div>
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var data = {
+            type: 'line',
+            data: {
+                labels: ["7일 전", "6일 전", "5일 전", "4일 전","3일 전", "2일 전","하루 전"],
+                datasets: [{
+                    label: "확진자 방문자 수",
+                    backgroundColor: "#F9A729",
+                    fill:false,
+                    borderColor: "#F9A729",
+                    lineTension:0.5,
+                    data: [0,0,0,0,0,0,0],
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    fontSize: 18,
+                    text: '확진자 방문자 수',
+                    fontFamily: 'MapoPeacefull'
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                legend:{
+                    display: false,
+                labels:{
+                        fontSize: 12,
+                        fontFamily: 'MapoPeacefull'
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                        stepSize: 1,
+                        unitStepSize: 1,
+                        suggestedMin: 0,
+                        beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        }
+        var chart = new Chart(ctx, data);
+
+
+
+
+        var ctx = document.getElementById('myChart2').getContext('2d');
+        var data = {
+            type: 'bar',
+            data: {
+                labels: ['1km 내','2km 내','3km 내','4km 내','5km 내'],
+                datasets: [{
+                    label: "반경 내 확진자 수",
+                    backgroundColor: "#F9A729",
+                    fill:false,
+                    borderColor: "#F9A729",
+                    lineTension:0.5,
+                    data: [0, 0,0,0,0],
+                }]
+
+            },
+            options: {
+                title: {
+                    display: true,
+                    fontSize: 18,
+                    text: '반경 내 확진자 수',
+                    fontFamily: 'MapoPeacefull'
+                },
+                legend:{
+                    display: false,
+                labels:{
+                        fontSize: 12,
+                        fontFamily: 'MapoPeacefull'
+                    }
+                },
+                responsive: true, 
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                        stepSize: 2,
+                        unitStepSize: 2,
+                        suggestedMin: 0
+                        }
+                    }]
+                }
+            }
+        }
+        var chart = new Chart(ctx, data);
+
+    </script>
+    {% include "template/footer.html" %}
+</body>
+
+</html>

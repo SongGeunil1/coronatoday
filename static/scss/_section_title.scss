@@ -1,0 +1,36 @@
+.section_title{
+    h3{
+        font-size: 38px;
+        font-weight: 400;
+        font-family: $font1;
+        position: relative;
+        z-index: 1;
+        display: inline-block;
+        @media #{$mobile_device} {
+            font-size: 30px;
+        }
+        &::before{
+            position: absolute;
+            content: "";
+            width: 20px;
+            background: #F4A919;
+            width: 60px;
+            height: 3px;
+            right: 0;
+            top: 50%;
+            margin-top: 3.5px;
+            right: -70px;
+        }
+        br{
+            @media #{$mobile_device} {
+                display: none;
+            }
+        }
+    }
+}
+.mb-33{
+	margin-bottom: 33px;
+	@media #{$mobile_device} {
+		margin-bottom: 10px;
+	}
+}

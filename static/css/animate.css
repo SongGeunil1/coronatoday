@@ -1,0 +1,20 @@
+@charset "UTF-8";
+.welcome_protomedia {
+  padding-top: 0px !important;
+  padding-bottom: 20px !important;
+}
+input{
+  font-size:25px !important;
+}
+input::placeholder {
+  font-size:25px !important;
+}
+@media (max-width: 767px) {
+  input{
+      font-size:15px !important;
+  }
+  
+  input::placeholder {
+      font-size:15px !important;
+  }
+}
