@@ -1,6 +1,9 @@
 # Corona-Today
 This is a website that shows and analyze Covid19 status in South Korea.
 
+I open this website in 2020-02-21, and closed in 2020-03-10 due to server cost.
+Approximately 1,000,000 unique user used this website(DAU was 75342).
+
 This website provides 3 types of information.
 
 <h1> 1. Risk Index </h1>
